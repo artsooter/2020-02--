@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Loading,Bar} from './component.js';
+import {Loading,Content} from './component.js';
 import {net} from './tool.js';
 import './css.css';
 import Vue from 'vue/dist/vue.js';
@@ -11,25 +11,40 @@ Vue.use(VueRouter);
 //如果使用模块化机制编程，要调用 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/loading', component: Loading },
-  { path: '/bar/:inte', component: Bar ,props:true}
+  { path: '/Loading', component: Loading },
+  { path: '/Content/:ContentData', component: Content ,props:true}
 ]//$route.params中会储存已经传入的参数
 
 const router = new VueRouter({
   routes ,// (缩写) 相当于 routes: routes
 })
+router.afterEach((to, from) => { //全局后置守卫按照创建顺序调用
+  console.log(to.path);
+  if(to.path=='/Loading'){
+    console.log(Loading.methods)
+    Loading.methods.init();
+  }
+})
+//console.log(router.match(location))
+//router.beforeEach()
 
 const store = new Vuex.Store({//状态保存空间
   state: {
-    count: 0
+    flag: '',
+    ContentData:[],
   },
   mutations: {//中间管理方法
-    loadingInit:function(){  
-      Loading.methods.init();
+    update:function(states,key,val){
+      states.key=val;
+      console.log(key)
+      console.log(states.key)
     },
-    add:function (states) {
-      states.count++;
-      console.log(states.count)
+    LoadingInit:function(states){  
+      states.flag='Loading'
+    },
+    ContentInit:function (states) {
+      states.flag='Content';
+      Content.methods.init(states);
     }
   }
 })
@@ -39,10 +54,16 @@ const store = new Vuex.Store({//状态保存空间
 let app=new Vue({//vue总管理器
   router,
   data:{
-    vuedata:123,
-    arr_interface:[],
+    vuedata:'ContentData',
+    InterfaceName:[],
   },
   methods: {
+    init:function(){
+      console.log(store)
+      store.commit('update',"flag",123)
+      console.log(store)
+
+    },
     VueRouterInit:function(event){//vue实例入口
       let ans=event.target.hash.match(/#\/([^\/]*)/)[1];//匹配出path
       console.log(ans)
@@ -52,31 +73,28 @@ let app=new Vue({//vue总管理器
       store.commit('add');
       console.log(router);
     }
+
   },
 }).$mount("#app");
 
 // 程序入口
 window.onload=function(){
+  
+  net('manage');
   //app.init();
-  const ans=[1,2,3];
-  let a = 'hello';
-  let b = 'world';
-
-  let test=function(){
-      setTimeout(() => {
-        console.log("异步1")
-      }, 0);
-      console.log("同步1")
-    
-    new Promise(function(reslove,reject){
-      console.log("同步2")
-      setTimeout(() => {
-        console.log("异步2")
-      }, 0);
-      reslove(3);
-    }).then((result) => {
-        console.log(`异步${result}`)
-    })   
-     
-  }();
+ 
+  /*
+  function Tnode(x){
+    this.val = x;
+    this.r = null;
+    this.l = null;
+  }
+  let p=new Tnode(1);
+  p.r=new Tnode(2);
+  p.r.r=new Tnode(3);
+  p.r.l=new Tnode(4);
+  p.l=new Tnode(6);
+  p.l.r=new Tnode(21);
+  p.l.l=new Tnode(9);
+  */
 }

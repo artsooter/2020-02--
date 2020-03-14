@@ -6,14 +6,18 @@ export const Loading = {
 				',
 	methods: {
 		init:function(){
-			let l_a = new this.LoadingAnimation(document.getElementById("loadingCanvas"));
+			setTimeout(()=>{
+				console.log(this)
+				console.log(document.getElementById("loadingCanvas"))
+			let l_a = new this.loadingAnimation(document.getElementById("loadingCanvas"));
 			l_a.canvas.width=document.getElementsByClassName("loading")[0].offsetWidth;
 			l_a.canvas.height=document.getElementsByClassName("loading")[0].offsetHeight;
 			l_a.update=this.update.bind(l_a);//将组件methods中的方法，搭载到对象上
 			window.requestAnimationFrame(l_a.update)//函数方法从外部搭载上去)
+			},0)
 		},
 		
-		LoadingAnimation:function(canvas){
+		loadingAnimation:function(canvas){
 			console.log (canvas);
 			this.canvas=canvas;
 			this.ctx=canvas.getContext('2d');
@@ -52,22 +56,6 @@ export const Loading = {
 			if(this.xPos<this.canvas.width/2){
 				window.requestAnimationFrame(this.update)
 			}
-			/*
-			this.img.onload = function(){
-				console.log(this)
-				this.ctx.drawImage(
-					this.img,
-					this.runFrame[this.changeFlag][0],
-					this.runFrame[this.changeFlag][1],
-					this.runFrame[this.changeFlag][2],
-					this.runFrame[this.changeFlag][3],
-					this.runFrame[this.changeFlag][4]+100,
-					this.runFrame[this.changeFlag][5]+100,
-					this.runFrame[this.changeFlag][6],
-					this.runFrame[this.changeFlag][7]);
-			}	
-			*/
-
 		},	
 	},
 }
@@ -80,18 +68,23 @@ export const Bar = {
 	template: '<div>{{ inte }}</div>',
 }
 
-export const vue_content=  {
-	// vue_content 组件现在接受一个
+export const Content=  {
+	// Content 组件现在接受一个
 	// "prop"，类似于一个自定义 attribute。
-	// 这个 prop 名为 interface。将vue里的数据传入组件的入口
-	props: ['interface'],
+	// 这个 prop 名为 contentData。将vue里的数据传入组件的入口
+	props: ['ContentData'],
 	template: '<div  class="content-bar" >\
-					<div class="content-head" v-if="interface.flag_head">\
-						<a  :href=interface.href_head > {{interface.text_head}} </a>\
+					<div class="content-head" >\
+						<a  :href=ContentData.href_head > {{ContentData.text_head}} </a>\
 					</div>\
-					<div class="content-main"  v-for="(snap,index) in Array(interface.num_main)">\
-						<a  :href=interface.href_main > {{interface.text_main[index]}} </a>\
+					<div class="content-main"  v-for="(snap,index) in Array(ContentData.num_main)">\
+						<a  :href=ContentData.href_main > {{ContentData.text_main[index]}} </a>\
 					</div>\
-				</div>	'
+				</div>	',
+	methods:{
+		init:function(states){
+			console.log(states)
+		}
+	}
 }
 
