@@ -1,18 +1,35 @@
 <!doctype html>
 <html>
  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>起步</title>
  </head>
  <body>
   <div id="app">
+
+    <div id="modernHome" class="modernHome" >
+        <div class="bigtext-div">
+          <span class="bigtext-span" >Hello</span>
+        </div>
+        <div class="line-div">
+          <span class="title-span" > web前端-景雪峰
+          </span>
+        </div>
+        
+        <div class="bigtext-div" >
+          <span class="bigtext-span" >Hello</span>
+        </div>
+		</div>
+      
+		
     <button v-on:click="clickMessage" id="btn"></button>
     <input v-model="InterfaceName">
     <p>
       <!-- 使用 router-link 组件来导航. -->
       <!-- 通过传入 `to` 属性指定链接. -->
       <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
-      <router-link to="/Loading" @click.stop.native="VueRouterInit($event)">loading</router-link>
-      <router-link :to="'/Content/'+InterfaceName" @click.stop.native="VueRouterInit($event)">bar</router-link>
+      <router-link to="/Loading" >loading</router-link>
+      <router-link to="/modern" >modern</router-link>
     </p>
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->

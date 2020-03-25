@@ -1,10 +1,11 @@
 import _ from 'lodash';
-import {Loading,Content} from './component.js';
+import {Loading,modern} from './component.js';
 import {net} from './tool.js';
 import './css.css';
 import Vue from 'vue/dist/vue.js';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
+import $ from '../node_modules/jquery/dist/jquery.js';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
@@ -12,7 +13,7 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: '/Loading', component: Loading },
-  { path: '/Content/:ContentData', component: Content ,props:true}
+  { path: '/modern', component: modern}
 ]//$route.params中会储存已经传入的参数
 
 const router = new VueRouter({
@@ -20,10 +21,20 @@ const router = new VueRouter({
 })
 router.afterEach((to, from) => { //全局后置守卫按照创建顺序调用
   console.log(to.path);
-  if(to.path=='/Loading'){
-    console.log(Loading.methods)
-    Loading.methods.init();
+  switch (to.path) {
+    case '/Loading':{
+      Loading.methods.init();
+      break;
+    }
+    case '/modern':{
+      modern.methods.init(store);
+      break;
+    }  
+  
+    default:
+      break;
   }
+
 })
 //console.log(router.match(location))
 //router.beforeEach()
@@ -34,17 +45,9 @@ const store = new Vuex.Store({//状态保存空间
     ContentData:[],
   },
   mutations: {//中间管理方法
-    update:function(states,key,val){
-      states.key=val;
-      console.log(key)
-      console.log(states.key)
-    },
-    LoadingInit:function(states){  
-      states.flag='Loading'
-    },
-    ContentInit:function (states) {
-      states.flag='Content';
-      Content.methods.init(states);
+    update:function(states,data){
+      states[data.key]=data.val;
+      console.log(states)
     }
   }
 })
@@ -59,15 +62,11 @@ let app=new Vue({//vue总管理器
   },
   methods: {
     init:function(){
-      console.log(store)
-      store.commit('update',"flag",123)
-      console.log(store)
-
-    },
-    VueRouterInit:function(event){//vue实例入口
-      let ans=event.target.hash.match(/#\/([^\/]*)/)[1];//匹配出path
-      console.log(ans)
-      store.commit(`${ans}Init`);
+      new Promise(function(resolve,reject){
+        net('manage',resolve,reject);
+      }).then(
+        (val)=>store.commit('update',{key:'ContentData',val:val})
+      )
     },
     clickMessage:function(){
       store.commit('add');
@@ -79,22 +78,89 @@ let app=new Vue({//vue总管理器
 
 // 程序入口
 window.onload=function(){
+
+  let animaManage=function(){ 
+    let snapLeft=0.06;//bigtext-snap的偏移量
+    $(".line-div").eq(0).removeClass("Anima3");
+    $(".line-div").eq(0).addClass("Anima1_line0");
+
+    $(".line-div").eq(0).on("animationend",(e)=>{//line-div 拉升完毕
+      $(".bigtext-div").eq(0).addClass("Anima1");
+      $(".bigtext-div").eq(1).addClass("Anima1");
+      $(".line-div").eq(0).addClass("Anima1_line1");
+    })
+    $(".bigtext-div").eq(0).on("animationend",(e)=>{//左边bigtext-div加载完成时
+      $(".title-span").eq(0).addClass("Anima2");
+      $(".bigtext-span").eq(0).addClass("Anima4");
+    })
+    $(".bigtext-span").eq(0).on("animationend",(e)=>{
+      $(".bigtext-span").eq(1).addClass("Anima4");
+    })
+
+    $(".bigtext-div:nth-child(3)>span").eq(0).css("left",$(".modernHome")[0].clientWidth*(-0.5-snapLeft)+"px");//设置字体位置
+    $(".bigtext-div:nth-child(1)>span").eq(0).css("left",$(".modernHome")[0].clientWidth*(-1*snapLeft)+"px");
+  }
+
+  new Promise(function(resolve,reject){
+    net('manage',resolve,reject);
+  }).then((val)=>{
+    this.console.log(val);
+    setTimeout(() => {
+      animaManage();//动画开始
+
+    }, 2000);
+  })
+  $(".line-div").eq(0).addClass("Anima3");
+
   
-  net('manage');
+  //net('manage');
   //app.init();
- 
-  /*
+  
+  //链表题目数据
   function Tnode(x){
     this.val = x;
-    this.r = null;
-    this.l = null;
+    this.right = null;
+    this.left = null;
   }
   let p=new Tnode(1);
-  p.r=new Tnode(2);
-  p.r.r=new Tnode(3);
-  p.r.l=new Tnode(4);
-  p.l=new Tnode(6);
-  p.l.r=new Tnode(21);
-  p.l.l=new Tnode(9);
-  */
+  p.right=new Tnode(2);
+  p.right.right=new Tnode(9);
+  p.right.left=new Tnode(4);
+  p.left=new Tnode(6);
+  p.left.right=new Tnode(5);
+  p.left.left=new Tnode(15);
+  p.left.left.left=new Tnode(100);
+  p.left.left.right=new Tnode(111);
+
+  //for([ans,dat] of obj) console.log(ans+" "+dat)
+    //console.log()
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 代码库
+
+let remove=function(array,num){//用于去除数组中某一个数字的函数
+  let ans;
+  if(array.indexOf(num)==-1)  return array;
+  ans=array.slice(0,array.indexOf(num)).concat(array.slice(array.indexOf(num)+1));
+  if(ans.indexOf(num)!=-1){
+    return remove(ans,num);
+  }
+  return ans;
+}
+
+
+
+
+*/

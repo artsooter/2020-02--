@@ -63,28 +63,32 @@ export const Loading = {
 
 
 
-export const Bar = {
-	props:['inte'],
-	template: '<div>{{ inte }}</div>',
-}
-
-export const Content=  {
+export const modern=  {
 	// Content 组件现在接受一个
 	// "prop"，类似于一个自定义 attribute。
 	// 这个 prop 名为 contentData。将vue里的数据传入组件的入口
-	props: ['ContentData'],
-	template: '<div  class="content-bar" >\
+	template: '<div>ContentData</div>',
+	/*
+	<div  class="content-bar" >\
 					<div class="content-head" >\
 						<a  :href=ContentData.href_head > {{ContentData.text_head}} </a>\
 					</div>\
 					<div class="content-main"  v-for="(snap,index) in Array(ContentData.num_main)">\
 						<a  :href=ContentData.href_main > {{ContentData.text_main[index]}} </a>\
 					</div>\
-				</div>	',
+				</div>	
+	*/
 	methods:{
 		init:function(states){
 			console.log(states)
+			console.log(this);
 		}
-	}
+	},
+	watch: {
+		ContentData : (oldval,newval)=>{
+			console.log(oldval)
+			console.log(newval)
+		}
+	},
 }
 

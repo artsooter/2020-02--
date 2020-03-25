@@ -5,7 +5,7 @@ const config={
 }
 //获取manage：url为“getManage” 
 //获取具体文章： url为id（文章编号）
-export function net(url) {
+export function net(url,resolve,reject) {//作为Promise调用
     let type_net='';
     if(typeof(url)==Number){
         url=config.getDetali+url;
@@ -22,10 +22,10 @@ export function net(url) {
                 data=JSON.parse(data);
             }else if(type_net=='detail'){
             }
-            console.log(data)
-            return data;
+            resolve(data);
         },
         error: function(e) {
+            reject("wrong");
             alert("error");
         }
     });
