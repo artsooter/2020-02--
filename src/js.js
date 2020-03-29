@@ -6,6 +6,7 @@ import Vue from 'vue/dist/vue.js';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import $ from '../node_modules/jquery/dist/jquery.js';
+import {leetcode} from './leetcode.js';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
@@ -23,7 +24,8 @@ router.afterEach((to, from) => { //全局后置守卫按照创建顺序调用
   console.log(to.path);
   switch (to.path) {
     case '/Loading':{
-      Loading.methods.init();
+      $(".loading").ready(()=>{      Loading.methods.init();
+      })
       break;
     }
     case '/modern':{
@@ -107,7 +109,6 @@ window.onload=function(){
     this.console.log(val);
     setTimeout(() => {
       animaManage();//动画开始
-
     }, 2000);
   })
   $(".line-div").eq(0).addClass("Anima3");
@@ -116,24 +117,8 @@ window.onload=function(){
   //net('manage');
   //app.init();
   
-  //链表题目数据
-  function Tnode(x){
-    this.val = x;
-    this.right = null;
-    this.left = null;
-  }
-  let p=new Tnode(1);
-  p.right=new Tnode(2);
-  p.right.right=new Tnode(9);
-  p.right.left=new Tnode(4);
-  p.left=new Tnode(6);
-  p.left.right=new Tnode(5);
-  p.left.left=new Tnode(15);
-  p.left.left.left=new Tnode(100);
-  p.left.left.right=new Tnode(111);
+  //console.log(leetcode());//leetcode刷题
 
-  //for([ans,dat] of obj) console.log(ans+" "+dat)
-    //console.log()
 }
 
 

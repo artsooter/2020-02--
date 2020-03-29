@@ -116,6 +116,10 @@ button{
 .Anima1_line1{
     animation: Anima1_line1 1s ease;
     animation-fill-mode: forwards;
+    height: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-size: 100% 100%;
     background-image: -webkit-linear-gradient(rgb(150, 150, 150),rgb(150, 150, 150));
 }
 .Anima2{/*中间那个“web前端景雪峰”的动画*/
@@ -184,6 +188,78 @@ button{
     }
 }
 
+/*简历界面*/
+#contentHome{
+
+    background-color: rgb(23, 22, 22);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+}
+.content-div{
+    background-color: #f9f9f9;
+    width: 40%;
+    height: 80%;
+    margin: 10% 0px;
+}
+.content-div:nth-child(1){
+    margin-left: 10%;
+}
+.content-div:nth-child(2){
+    margin-right: 10%;
+}
+.content-div>div{
+    width: 70%;
+    height: 18%;
+}
+#contentHome::after {
+    content: "";/* 必须要加content，不然显示不出来*/
+    left: calc(50% - 1px);
+    height: 100%;
+    display: block;
+    width: 1px;
+    background-color: rgb(150, 150, 150);
+    position:absolute;
+}
+
+.content-div>span,.content-div>div{
+    margin:20% 5% 20% 20%;
+}
+.face-span{
+    width: 7em;
+    height: 7em;
+    display: block;
+    border-radius: 50%;
+    background-size: cover;
+    background-image: url(./img/face.jpg);
+}
+.content-div>div>span{/*span的整体属性*/
+    display: block;
+    margin-top: 10px;
+    opacity: 0.4;
+}
+.content-title-span{
+    margin-left: 15%;
+    letter-spacing: 2px;
+}
+.content-title-span:after{
+    content: "";
+    display: block;
+    position: relative;
+    top: -10px;
+    left:-17%;
+    width: 13%;
+    height: 1px;
+    background-color: black;
+}
+.content-div>div>.content-main-span{
+    opacity: 0.8 ;
+    font-size: 14px;
+    line-height: 26px;
+    letter-spacing: 2px;
+
+}
 /*手机端适配  方便调试 暂时不用
 @media (max-width:1000px){
     .bigtext-div > span{

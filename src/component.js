@@ -6,7 +6,6 @@ export const Loading = {
 				',
 	methods: {
 		init:function(){
-			setTimeout(()=>{
 				console.log(this)
 				console.log(document.getElementById("loadingCanvas"))
 			let l_a = new this.loadingAnimation(document.getElementById("loadingCanvas"));
@@ -14,7 +13,6 @@ export const Loading = {
 			l_a.canvas.height=document.getElementsByClassName("loading")[0].offsetHeight;
 			l_a.update=this.update.bind(l_a);//将组件methods中的方法，搭载到对象上
 			window.requestAnimationFrame(l_a.update)//函数方法从外部搭载上去)
-			},0)
 		},
 		
 		loadingAnimation:function(canvas){
@@ -57,7 +55,7 @@ export const Loading = {
 				window.requestAnimationFrame(this.update)
 			}
 		},	
-	},
+	}
 }
 
 
