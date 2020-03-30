@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {Loading,modern} from './component.js';
-import {net} from './tool.js';
+import {net,FaceAnimation} from './tool.js';
 import './css.css';
 import Vue from 'vue/dist/vue.js';
 import VueRouter from 'vue-router';
@@ -73,14 +73,19 @@ let app=new Vue({//vue总管理器
     clickMessage:function(){
       store.commit('add');
       console.log(router);
+    },
+    btnSpanClick:function(e){
+      console.log(e)
+      window.scrollTo({ 
+        top: window.innerHeight, 
+        behavior: "smooth" 
+      });
     }
-
   },
 }).$mount("#app");
 
 // 程序入口
 window.onload=function(){
-
   let animaManage=function(){ 
     let snapLeft=0.06;//bigtext-snap的偏移量
     $(".line-div").eq(0).removeClass("Anima3");
@@ -94,12 +99,13 @@ window.onload=function(){
     $(".bigtext-div").eq(0).on("animationend",(e)=>{//左边bigtext-div加载完成时
       $(".title-span").eq(0).addClass("Anima2");
       $(".bigtext-span").eq(0).addClass("Anima4");
+      $(".btn-div").eq(0).addClass("Anima5");
     })
     $(".bigtext-span").eq(0).on("animationend",(e)=>{
       $(".bigtext-span").eq(1).addClass("Anima4");
     })
 
-    $(".bigtext-div:nth-child(3)>span").eq(0).css("left",$(".modernHome")[0].clientWidth*(-0.5-snapLeft)+"px");//设置字体位置
+    $(".bigtext-div:nth-child(4)>span").eq(0).css("left",$(".modernHome")[0].clientWidth*(-0.5-snapLeft)+"px");//设置字体位置
     $(".bigtext-div:nth-child(1)>span").eq(0).css("left",$(".modernHome")[0].clientWidth*(-1*snapLeft)+"px");
   }
 
@@ -109,11 +115,19 @@ window.onload=function(){
     this.console.log(val);
     setTimeout(() => {
       animaManage();//动画开始
-    }, 2000);
+    }, 1000);
   })
+
   $(".line-div").eq(0).addClass("Anima3");
 
-  
+  $(window).scroll(function() {
+    //为了保证兼容性，这里取两个值，哪个有值取哪一个
+    //scrollTop就是触发滚轮事件时滚轮的高度
+    let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    if(scrollTop>300){
+      new FaceAnimation($(".face-canvas")[0]);
+    }
+  })
   //net('manage');
   //app.init();
   

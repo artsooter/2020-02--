@@ -92,6 +92,54 @@ button{
     width: 1px;
     z-index: 100;
 }
+.btn-div{
+    opacity: 0;
+    bottom: -20px;
+    background-color: rgb(255, 255, 255);
+    z-index: 100;
+    position: absolute;
+    width:40px;
+    height:40px;
+    border-radius: 100%;
+    left: calc(50% - 20px);
+}
+.btn-div:after{
+    transition: transform 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86), -webkit-transform 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    border-radius: 100%;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%) scale(0.8);
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(255,255,255,0.5);
+    z-index: -1;
+}
+.btn-div:hover{
+    cursor: pointer;
+}
+.btn-div:hover:after{
+    transform: translate(-50%, -50%) scale(1.2);
+}
+.btn-span{
+    height: 100%;
+    display: block;
+}
+.btn-svg{
+    display: block;
+    height: 20px;
+    transform: rotate(-90deg);
+    width: 20px;
+    left: 10px;
+    top: 10px;
+    position: absolute;
+}
+.btn-svg>path{
+    fill:black;
+}
 .title-span{
     top: 45%;
     left: calc(50% - 131px);
@@ -106,15 +154,15 @@ button{
 }
 .Anima1{/*两个大div的动画*/
     animation: 
-    Anima1 1s  ease;
+    Anima1 0.8s  cubic-bezier(0.42, 0, 1, 0.8);
     animation-fill-mode: forwards;
 }
 .Anima1_line0{
-    animation: Anima1_line0 0.5s ease;
+    animation: Anima1_line0 0.4s  cubic-bezier(0.42, 0, 1, 0.8);
     animation-fill-mode: forwards;
 }
 .Anima1_line1{
-    animation: Anima1_line1 1s ease;
+    animation: Anima1_line1 0.8s  cubic-bezier(0.42, 0, 1, 0.8);
     animation-fill-mode: forwards;
     height: 100%;
     margin-top: 0px;
@@ -123,17 +171,21 @@ button{
     background-image: -webkit-linear-gradient(rgb(150, 150, 150),rgb(150, 150, 150));
 }
 .Anima2{/*中间那个“web前端景雪峰”的动画*/
-    animation: Anima2 1s ease-in;
+    animation: Anima2 0.8s cubic-bezier(0.42, 0, 1, 0.67);
     animation-fill-mode: forwards;
 }
 .Anima3{/*最开始线段加载的动画*/
-    animation:Anima3 2s infinite  ease-in;
+    animation:Anima3 1.6s infinite  ease;
     background-position: 0% 0%;
     background-size: 100% 20%;
     background-repeat: no-repeat;
 }
 .Anima4{
-    animation: Anima4 1s ease;
+    animation: Anima4 0.8s cubic-bezier(0.42, 0, 1, 0.8);
+    animation-fill-mode: forwards;
+}
+.Anima5{/*下方，带箭头的按钮*/
+    animation: Anima5 0.8s;
     animation-fill-mode: forwards;
 }
 
@@ -187,6 +239,18 @@ button{
         opacity: 1;
     }
 }
+@keyframes Anima5{
+    0%{
+        bottom: -20px;
+    }
+    20%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+        bottom: 40px;
+    }
+}
 
 /*简历界面*/
 #contentHome{
@@ -215,7 +279,7 @@ button{
 }
 #contentHome::after {
     content: "";/* 必须要加content，不然显示不出来*/
-    left: calc(50% - 1px);
+    left: calc(50% - 0.5px);
     height: 100%;
     display: block;
     width: 1px;
@@ -225,6 +289,10 @@ button{
 
 .content-div>span,.content-div>div{
     margin:20% 5% 20% 20%;
+}
+.face-canvas{
+    position: absolute;
+    margin: -20% 0% 0% 20%;
 }
 .face-span{
     width: 7em;
@@ -258,7 +326,10 @@ button{
     font-size: 14px;
     line-height: 26px;
     letter-spacing: 2px;
-
+}
+.content-main-span h1{
+    display: inline;
+    font-size: 1em;
 }
 /*手机端适配  方便调试 暂时不用
 @media (max-width:1000px){
