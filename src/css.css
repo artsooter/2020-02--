@@ -1,4 +1,3 @@
-
 .hello {
     color: blue;
 }
@@ -150,7 +149,7 @@ button{
     white-space:nowrap;
     border-radius: 4px;
     font-size: 30px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 .Anima1{/*两个大div的动画*/
     animation: 
@@ -194,7 +193,7 @@ button{
         flex-basis: 0px;
     }
     100%{
-        flex-basis: calc(50% - 1px);
+        flex-basis: calc(50% - 0.5px);
     }
 }
 @keyframes Anima1_line0{
@@ -261,11 +260,21 @@ button{
     display: flex;
     display: -webkit-flex;
 }
+#contentHome::after {
+    content: "";/* 必须要加content，不然显示不出来*/
+    left: calc(50% - 0.5px);
+    height: 100%;
+    display: block;
+    width: 1px;
+    background-color: rgb(150, 150, 150);
+    position:absolute;
+}
 .content-div{
     background-color: #f9f9f9;
     width: 40%;
     height: 80%;
     margin: 10% 0px;
+    margin-bottom: 0;
 }
 .content-div:nth-child(1){
     margin-left: 10%;
@@ -276,19 +285,10 @@ button{
 .content-div>div{
     width: 70%;
     height: 18%;
+    display: inline-block;
 }
-#contentHome::after {
-    content: "";/* 必须要加content，不然显示不出来*/
-    left: calc(50% - 0.5px);
-    height: 100%;
-    display: block;
-    width: 1px;
-    background-color: rgb(150, 150, 150);
-    position:absolute;
-}
-
 .content-div>span,.content-div>div{
-    margin:20% 5% 20% 20%;
+    margin:20% 5% 10% 20%;
 }
 .face-canvas{
     position: absolute;
@@ -331,17 +331,47 @@ button{
     display: inline;
     font-size: 1em;
 }
-/*手机端适配  方便调试 暂时不用
+
+/*具体项目界面*/
+#detailHome{
+    background-color: salmon;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index:-1;
+}
+.detail-div{
+    position:absolute;
+    height: 100%;
+    width: 50%;
+    background-color: seagreen;
+
+}
+.detail-div>span{
+    font-size: xx-large;
+    position: relative;
+    top: 50%;
+}
+
+/*手机端适配  */
 @media (max-width:1000px){
-    .bigtext-div > span{
-        left: 40%;
+    .bigtext-div:nth-child(1) > span {
+        left: 40% !important;
         writing-mode: vertical-lr;
     }
-    .bigtext-div:nth-child(3)>span{
-        left:-60%;
+    .bigtext-div:nth-child(4)>span{
+        left:-60% !important;
+        writing-mode: vertical-lr;
     }
+    .content-div>div>.content-main-span{
+        opacity: 0.8;
+        font-size: 2.4vw;
+        line-height: 2em;
+        letter-spacing: 0.1em;
+    }
+
 }
-*/
+
 
 /*
 
